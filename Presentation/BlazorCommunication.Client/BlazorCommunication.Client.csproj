@@ -10,4 +10,8 @@
     <PackageReference Include="MatBlazor" Version="2.10.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\BlazorCommunication.Application\BlazorCommunication.Application.csproj" />
+  </ItemGroup>
+
 </Project>
