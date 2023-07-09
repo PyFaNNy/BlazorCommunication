@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using BlazorCommunication.Application;
 using BlazorCommunication.Middlewares;
 using BlazorCommunication.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -45,6 +46,12 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+var dbContext = app.Services.CreateScope().ServiceProvider.GetRequiredService<BlazorCommunicationDbContext>();
+if (dbContext.Database.IsSqlServer())
+{
+    dbContext.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
