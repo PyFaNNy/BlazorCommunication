@@ -1,9 +1,12 @@
 ﻿@page "/users"
+@using BlazorCommunication.Client.Services.Users
+@implements IDisposable
+@inject IUserService UserService
+
 
 <h3>Users</h3>
-<button type="submit" class="btn btn-danger m-1">Delete</button>
-<button class="btn btn-warning m-1">Create</button>
-<button class="btn btn-success m-1">Update</button>
+<button class="btn btn-danger m-1">Delete</button>
+<button class="btn btn-success m-1">Create</button>
 
 <table class="table table-striped table-hover">
     <tr>
@@ -16,21 +19,44 @@
         <th>
             <a>FirstName</a>
         </th>
+        <th></th>
         <th>
             <input type="checkbox" name="cb_all">
         </th>
     </tr>
-
-    <tr>
-        <td>Email</td>
-        <td>LastName</td>
-        <td>FirstName</td>
-        <td>
-            <input type="checkbox"/>
-        </td>
-    </tr>
+    @foreach (var user in UserService.Users)
+    {
+        <tr>
+            <td>@user.Email</td>
+            <td>@user.LastName</td>
+            <td>@user.FirstName</td>
+            <td>
+                <a href="updateuser/@user.Email">
+                    <button class="btn btn-primary m-1">Update</button>
+                </a>
+            </td>
+            <td>
+                <input type="checkbox"/>
+            </td>
+        </tr>
+    }
 </table>
 
 @code {
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await UserService.GetUsers(UserService.CurrentPage, UserService.PageSize);
+    }
+
+    protected override void OnInitialized()
+    {
+        UserService.UsersChanged += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        UserService.UsersChanged -= StateHasChanged;
+    }
 
 }

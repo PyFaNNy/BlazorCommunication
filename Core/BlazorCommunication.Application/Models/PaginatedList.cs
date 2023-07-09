@@ -28,6 +28,11 @@ public class PaginatedList<T>
         set;
     }
 
+    public PaginatedList()
+    {
+        
+    }
+    
     public PaginatedList(List<T> items, int count, int pageIndex, int pageSize)
     {
         PageIndex = pageIndex;

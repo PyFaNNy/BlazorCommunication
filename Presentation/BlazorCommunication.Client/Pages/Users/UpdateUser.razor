@@ -1,0 +1,51 @@
+﻿@page "/updateuser/{email}"
+@using BlazorCommunication.Application.Aggregates.User.Commands.UpdateUser
+@using BlazorCommunication.Client.Services.Users
+@inject IUserService UserService
+@inject NavigationManager NavigationManager
+
+<h2>Update User</h2>
+
+<div class="col-md-4">
+    <EditForm Model="updateUser" OnValidSubmit="Update">
+        <DataAnnotationsValidator></DataAnnotationsValidator>
+        <div class="form-group">
+            <label class="form-label">FirstName</label><br/>
+            <InputText @bind-Value="updateUser.FirstName" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label class="form-label">LastName</label><br/>
+            <InputText @bind-Value="updateUser.LastName" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label class="form-label">Email</label><br/>
+            <InputText @bind-Value="updateUser.Email" class="form-control"/>
+        </div>
+        <div>
+            <button class="btn btn-primary mt-1">Update</button>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+
+    [Parameter]
+    public string Email { get; set; }
+
+    UpdateUserCommand updateUser = new UpdateUserCommand();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var user = await UserService.GetUserByEmail(Email);
+
+        updateUser.Email = user.Email;
+        updateUser.FirstName = user.FirstName;
+        updateUser.LastName = user.LastName;
+    }
+
+    async void Update()
+    {
+        var user = await UserService.UpdateUser(updateUser);
+        NavigationManager.NavigateTo($"/users", true);
+    }
+}

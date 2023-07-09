@@ -29,7 +29,7 @@ public class UserController : BaseController
     [HttpGet("{email}")]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(User))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<User>> GetUserByEmail(string email)
+    public async Task<IActionResult> GetUserByEmail(string email)
     {
         try
         {
@@ -49,7 +49,7 @@ public class UserController : BaseController
     /// <returns></returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedList<PaginatedUser>))]
-    public async Task<ActionResult<PaginatedList<PaginatedUser>>> GetUsers(int? pageIndex = 1, int? pageSize = 10)
+    public async Task<IActionResult> GetUsers(int? pageIndex = 1, int? pageSize = 10)
     {
         var result = await Mediator.Send(new GetUsersQuery(pageIndex, pageSize));
         return Ok(result);
@@ -62,10 +62,10 @@ public class UserController : BaseController
     /// <returns></returns>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateUser))]
-    public async Task<ActionResult<PaginatedList<PaginatedUser>>> CreateUser(CreateUserCommand command)
+    public async Task<IActionResult> CreateUser(CreateUserCommand command)
     {
         var result = await Mediator.Send(command);
-        return Ok(result);
+        return Created("",result);
     }
 
     /// <summary>
@@ -98,7 +98,7 @@ public class UserController : BaseController
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(BlazorCommunication.Application.Aggregates.User.Commands.UpdateUser.User))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<BlazorCommunication.Application.Aggregates.User.Commands.UpdateUser.User>> UpdateUser(UpdateUserCommand command)
+    public async Task<IActionResult> UpdateUser(UpdateUserCommand command)
     {
         try
         {
