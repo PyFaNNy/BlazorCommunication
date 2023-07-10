@@ -21,8 +21,9 @@
             <label class="form-label">Email</label><br/>
             <InputText @bind-Value="updateUser.Email" class="form-control"/>
         </div>
-        <div>
-            <button class="btn btn-primary mt-1">Update</button>
+        <div class="form-group mt-1">
+            <button type="submit" class="btn btn-primary">Save</button>
+            <button class="btn btn-success" @onclick="Cancel">Cancel</button>
         </div>
     </EditForm>
 </div>
@@ -47,5 +48,10 @@
     {
         var user = await UserService.UpdateUser(updateUser);
         NavigationManager.NavigateTo($"/users", true);
+    }
+    
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/users");
     }
 }

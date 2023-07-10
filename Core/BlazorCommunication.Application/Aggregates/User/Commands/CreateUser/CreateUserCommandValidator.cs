@@ -28,6 +28,11 @@ public class CreateUserCommandValidator : AbstractValidator<CreateUserCommand>
 
         RuleFor(x => x.Password)
             .Must(PasswordsHelper.IsMeetsRequirements);
+        
+        RuleFor(x => x.ConfirmPassword)
+            .NotNull()
+            .NotEmpty()
+            .Equal(x => x.Password);
     }
     
     private bool IsUniqueEmail(string email)
