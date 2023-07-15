@@ -1,4 +1,6 @@
-﻿using IdentityModel;
+﻿
+
+using IdentityModel;
 using IdentityServer4.Models;
 
 namespace BlazorCommunication.IdentityServer;
@@ -10,8 +12,8 @@ public static class Configuration
         {
             new Client
             {
-                ClientId = "template_client",
-                ClientSecrets = {new Secret("template_client".ToSha256())},
+                ClientId = "blazor_client",
+                ClientSecrets = {new Secret("blazor_client".ToSha256())},
                 AllowedCorsOrigins =
                 {
                     configuration.GetValue<string>("FRONTEND_URL"),

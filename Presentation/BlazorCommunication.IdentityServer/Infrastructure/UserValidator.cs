@@ -1,18 +1,22 @@
 ﻿using System.Security.Claims;
 using BlazorCommunication.Application.Interfaces;
 using BlazorCommunication.Common;
+using BlazorCommunication.IdentityServer.Models;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 namespace BlazorCommunication.IdentityServer.Infrastructure;
 
 public class UserValidator : IResourceOwnerPasswordValidator
 {
     private readonly IBlazorCommunicationDbContext _dbContext;
-    public UserValidator(IBlazorCommunicationDbContext dbContext)
+    private readonly SuperAdmin _supAdmin;
+    public UserValidator(IBlazorCommunicationDbContext dbContext, IOptions<SuperAdmin> superAdmin)
     {
         _dbContext = dbContext;
+        _supAdmin = superAdmin.Value;
     }
 
     public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)
@@ -24,6 +28,7 @@ public class UserValidator : IResourceOwnerPasswordValidator
             var result = PasswordsHelper.VerifyPasswordHash(context.Password, user.PasswordHash, user.PasswordSalt);
             if (result)
             {
+                // context set to success
                 context.Result = new GrantValidationResult(
                     subject: user.Id.ToString(),
                     authenticationMethod: "custom",
@@ -31,7 +36,6 @@ public class UserValidator : IResourceOwnerPasswordValidator
                     {
                         new Claim(ClaimTypes.Name, user.Email),
                         new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                        //Add role to claim
                         //new Claim(ClaimTypes.Role, user.Role.ToName())
                     }
                 );
