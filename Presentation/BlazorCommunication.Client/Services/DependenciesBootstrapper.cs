@@ -1,4 +1,6 @@
-﻿using BlazorCommunication.Client.Services.Users;
+﻿using BlazorCommunication.Client.Services.AuthService;
+using BlazorCommunication.Client.Services.Users;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace BlazorCommunication.Client.Services;
 
@@ -6,9 +8,13 @@ public static class DependenciesBootstrapper
 {
     public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
     {
-        var BlazorCommunicationAPI = new Uri(configuration.GetValue<string>("BlazorCommunicationAPI"));
+        var BlazorIdentityAPI = new Uri(configuration.GetValue<string>(HttpClientNames.BlazorIdentityAPI));
         
-        services.AddHttpClient<IUserService, UserService>(c => c.BaseAddress = BlazorCommunicationAPI);
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IAuthService, AuthService.AuthService>();
+        
+        services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
         
         return services;
     }

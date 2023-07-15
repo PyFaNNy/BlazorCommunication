@@ -3,7 +3,6 @@
 @implements IDisposable
 @inject IUserService UserService
 
-
 <h3>Users</h3>
 <button class="btn btn-danger m-1">Delete</button>
 <a href="createuser">
@@ -45,9 +44,12 @@
 </table>
 
 @code {
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await UserService.GetUsers(UserService.CurrentPage, UserService.PageSize);
+        if (firstRender)
+        {
+            await UserService.GetUsers(UserService.CurrentPage, UserService.PageSize);
+        }
     }
 
     protected override void OnInitialized()

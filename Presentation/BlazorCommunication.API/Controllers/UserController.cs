@@ -61,11 +61,11 @@ public class UserController : BaseController
     /// <param name="command"></param>
     /// <returns></returns>
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status201Created, Type = typeof(CreateUser))]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(CreateUser))]
     public async Task<IActionResult> CreateUser(CreateUserCommand command)
     {
         var result = await Mediator.Send(command);
-        return Created("",result);
+        return Ok(result);
     }
 
     /// <summary>

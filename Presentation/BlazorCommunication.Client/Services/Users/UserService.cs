@@ -14,9 +14,9 @@ public class UserService : IUserService
     public int PageSize { get; set; } = 5;
     public List<User> Users { get; set; } = new List<User>();
 
-    public UserService(HttpClient http)
+    public UserService(IHttpClientFactory httpClientFactory)
     {
-        _http = http;
+        _http = httpClientFactory.CreateClient(HttpClientNames.BlazorCommunicationAPI);
     }
     
     public async Task<Application.Aggregates.User.Queries.GetUserByEmail.User> GetUserByEmail(string email)

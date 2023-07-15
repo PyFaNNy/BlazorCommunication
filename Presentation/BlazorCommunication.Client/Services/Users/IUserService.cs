@@ -1,6 +1,5 @@
 ﻿using BlazorCommunication.Application.Aggregates.User.Commands.CreateUser;
 using BlazorCommunication.Application.Aggregates.User.Commands.UpdateUser;
-using BlazorCommunication.Application.Models;
 using User = BlazorCommunication.Application.Aggregates.User.Queries.GetUsers.User;
 
 namespace BlazorCommunication.Client.Services.Users;

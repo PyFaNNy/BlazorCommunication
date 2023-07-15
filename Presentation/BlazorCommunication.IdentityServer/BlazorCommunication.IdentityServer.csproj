@@ -4,20 +4,19 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>3a2d895a-e289-4f0d-8388-d3c22983ec5f</UserSecretsId>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="IdentityServer4" Version="4.1.2" />
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.5" />
-        <PackageReference Include="OpenIddict.AspNetCore" Version="4.5.0" />
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.0" />
+        <PackageReference Include="OpenIddict.AspNetCore" Version="4.6.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers" />
-    </ItemGroup>
-
-    <ItemGroup>
+      <ProjectReference Include="..\..\Core\BlazorCommunication.Application\BlazorCommunication.Application.csproj" />
       <ProjectReference Include="..\..\Infrastructure\BlazorCommunication.Persistence\BlazorCommunication.Persistence.csproj" />
     </ItemGroup>
 

@@ -6,4 +6,6 @@ public interface IAuthService
 {
     Task<LoginResponse> Login(UserLogin request);
     Task<bool> IsUserAuthenticated();
+    Task Logout();
+    Task RefreshTokenAsync();
 }
