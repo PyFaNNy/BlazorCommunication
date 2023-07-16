@@ -1,22 +1,19 @@
 ﻿using System.Security.Claims;
 using BlazorCommunication.Application.Interfaces;
 using BlazorCommunication.Common;
-using BlazorCommunication.IdentityServer.Models;
 using IdentityServer4.Models;
 using IdentityServer4.Validation;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace BlazorCommunication.IdentityServer.Infrastructure;
 
 public class UserValidator : IResourceOwnerPasswordValidator
 {
     private readonly IBlazorCommunicationDbContext _dbContext;
-    private readonly SuperAdmin _supAdmin;
-    public UserValidator(IBlazorCommunicationDbContext dbContext, IOptions<SuperAdmin> superAdmin)
+
+    public UserValidator(IBlazorCommunicationDbContext dbContext)
     {
         _dbContext = dbContext;
-        _supAdmin = superAdmin.Value;
     }
 
     public async Task ValidateAsync(ResourceOwnerPasswordValidationContext context)

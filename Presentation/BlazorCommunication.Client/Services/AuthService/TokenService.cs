@@ -18,7 +18,7 @@ public class TokenService : ITokenService
             var token = await _localStorage.GetItemAsStringAsync(ACCESS_TOKEN);
             return token;
         }
-        catch (InvalidOperationException)
+        catch
         {
         }
 

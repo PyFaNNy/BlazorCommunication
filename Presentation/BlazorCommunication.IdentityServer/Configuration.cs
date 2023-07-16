@@ -23,7 +23,7 @@ public static class Configuration
 
                 AllowedScopes =
                 {
-                    "TrainerAPI"
+                    "BlazorCommunicationAPI"
                 },
                 AccessTokenLifetime = 3600,
                 AllowOfflineAccess = true

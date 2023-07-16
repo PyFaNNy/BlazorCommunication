@@ -50,10 +50,10 @@
         var user = authState.User;
 
         isAuthenticated = user.Identity.IsAuthenticated;
-
+        var name = user.Identity.Name;
         if (isAuthenticated)
         {
-            userEmail = user.FindFirst(c => c.Type == ClaimTypes.Name)?.Value;
+            userEmail = user.FindFirst(c => c.Type == "email")?.Value;
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text.Json;
 using BlazorCommunication.Client.Services.AuthService;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -26,7 +27,7 @@ namespace BlazorCommunication.Client.Services;
                 {
                     identity = new ClaimsIdentity(ParseClaimsFromJwt(authToken), "jwt");
                 }
-                catch
+                catch(Exception ex)
                 {
                     await _tokenService.RemoveToken();
                     identity = new ClaimsIdentity();
@@ -40,8 +41,8 @@ namespace BlazorCommunication.Client.Services;
 
             return state;
         }
-
-        private byte[] ParseBase64WithoutPadding(string base64)
+        
+        private static byte[] ParseBase64WithoutPadding(string base64)
         {
             switch (base64.Length % 4)
             {
@@ -51,7 +52,7 @@ namespace BlazorCommunication.Client.Services;
             return Convert.FromBase64String(base64);
         }
 
-        private IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
+        private static IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
         {
             var payload = jwt.Split('.')[1];
             var jsonBytes = ParseBase64WithoutPadding(payload);

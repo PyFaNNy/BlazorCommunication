@@ -1,6 +1,5 @@
 using BlazorCommunication.IdentityServer;
 using BlazorCommunication.IdentityServer.Infrastructure;
-using BlazorCommunication.IdentityServer.Models;
 using BlazorCommunication.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,8 +28,6 @@ builder.Services.AddIdentityServer()
     .AddResourceOwnerValidator<UserValidator>()
     .AddProfileService<ProfileService>()
     .AddDeveloperSigningCredential();
-
-builder.Services.Configure<SuperAdmin>(builder.Configuration.GetSection("SuperAdmin"));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
